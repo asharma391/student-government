@@ -1,0 +1,124 @@
+<!-- 1. Make it so you can't go past screens without making selections
+2. Add intro screen 3. Fix submit page 4. Connect GSheets API
+5. Make it so it's only names + importable via text file (houses + names)
+6. make it so the background colour corresponds to the houses 7. 2 vs. 4 screens-->
+
+<!-- TBD Jan 20: create .csv with randomized Houses/name info in the file names; so that architecture referencing sheet with house/name/gender information between images + csv works-->
+<!-- 1st screen: 3 Head prefects; 2nd screen: 6 prefects; if you picked head prefect that should be shaded so you can't pick prefects you designated as head prefects-->
+<!-- random order of houses non-alphabetical -->
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefect Vote</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="google-signin-client_id" content="990075768946-tjor5n9mrvpvr7qu3ad3rusljolh6fev.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="TCSLogo.png" alt="TCS Logo">
+    </div>
+    <div class="content-container">
+        <!-- Add sign-in container -->
+        <div id="signInContainer" class="sign-in-container">
+            <h2>Please Sign In with your TCS Account</h2>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <a href="#" onclick="signOut();" class="sign-out-button" style="display: none;">Sign out</a>
+        </div>
+
+        <form id="voteForm" style="display: none;">
+            <div class="page" id="introPage">
+                <h2>Welcome to the Prefect Voting Portal</h2>
+                <p>Please select your Head Prefects and Prefects.</p>
+            </div>
+
+            <div class="page" id="headPrefectsPage">
+                <h2>Select 3 Head Prefects</h2>
+                <div class="student-container" id="headPrefectsContainer"></div>
+            </div>
+            
+            <div class="page" id="prefectsPage">
+                <h2>Select 6 Prefects</h2>
+                <div class="student-container" id="prefectsContainer"></div>
+            </div>
+
+            <div class="page" id="thankYouPage">
+                <h2>Thank You!</h2>
+                <p>We have received your votes!</p>
+                <p>You can now close this window.</p>
+            </div>
+
+            <div class="button-container">
+                <button type="button" class="nav-button" onclick="prevPage()">Previous</button>
+                <button type="button" class="nav-button" onclick="nextPage()">Next</button>
+                <button type="submit" class="submit-button">Submit</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+    let userEmail = null;
+
+    function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        userEmail = profile.getEmail();
+        
+        // Check if email is from tcs.on.ca domain
+        if (!userEmail.endsWith('@tcs.on.ca')) {
+            alert('Please use your TCS email account to sign in.');
+            signOut();
+            return;
+        }
+
+        // Check if user has already voted
+        checkPreviousVote(userEmail).then(hasVoted => {
+            if (hasVoted) {
+                alert('You have already submitted your votes.');
+                signOut();
+                return;
+            }
+            
+            // Show the voting form and sign out button
+            document.getElementById('voteForm').style.display = 'block';
+            document.querySelector('.sign-out-button').style.display = 'block';
+        });
+    }
+
+    async function checkPreviousVote(email) {
+        try {
+            const token = await getAccessToken();
+            const response = await fetch(
+                `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Submissions!A:B`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+            
+            if (!response.ok) throw new Error('Failed to check previous votes');
+            
+            const data = await response.json();
+            return data.values ? data.values.some(row => row[1] === email) : false;
+        } catch (error) {
+            console.error('Error checking previous vote:', error);
+            return false;
+        }
+    }
+
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+            userEmail = null;
+            document.getElementById('voteForm').style.display = 'none';
+            document.querySelector('.sign-out-button').style.display = 'none';
+        });
+    }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
