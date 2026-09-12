@@ -1,6 +1,6 @@
-**Official student government election app used annually by 600+ Trinity College School students and staff.**
+## Official student government election app used annually by 600+ TCS students and staff.
 
-Live platform [link](https://tcs-prefect-vote.web.app/) deploys once every may during the student government election period.
+The [voting platform](https://tcs-prefect-vote.web.app/) is deployed every May during the student government election period.
 
 ### Staff Instructions
 
