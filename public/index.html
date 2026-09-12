@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Student Government Elections</title>
+    <meta
+      name="description"
+      content="The student government election app built for Trinity College School."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="src/app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to ballot</a>
+    <div class="logo-container">
+      <img src="assets/tcs-logo.png" alt="Trinity College School" />
+    </div>
+    <div class="content-container">
+      <section id="sign-in" class="sign-in-container">
+        <h1>Welcome</h1>
+        <button id="login" class="primary" type="button">Vote</button>
+      </section>
+      <main id="main" tabindex="-1" hidden>
+        <ol id="steps" class="steps" aria-label="Ballot progress">
+          <li aria-current="step"><span>1</span> Leadership</li>
+          <li><span>2</span> Representatives</li>
+          <li><span>3</span> Review</li>
+        </ol>
+        <p class="step-label" id="step-label">STEP 01 OF 03</p>
+        <div class="heading-row">
+          <div>
+            <h1 id="title" tabindex="-1">Choose your student leaders</h1>
+            <p id="instruction">Loading ballot…</p>
+          </div>
+          <div class="counter" id="counter" aria-live="polite"></div>
+        </div>
+        <p id="notice" role="status" aria-live="polite"></p>
+        <div
+          id="candidates"
+          class="candidate-grid"
+          aria-label="Candidates"
+        ></div>
+        <div id="review" hidden></div>
+        <div id="navigation" class="navigation">
+          <button id="back" class="secondary" type="button" hidden>
+            Previous
+          </button>
+          <p id="help">Select candidates to continue.</p>
+          <button id="next" class="primary" type="button" disabled>Next</button>
+        </div>
+        <p class="privacy" id="privacy">
+          Fictional candidates are used in this public version. No photographs
+          or real votes are stored.
+        </p>
+        <noscript>JavaScript is required to use the ballot.</noscript>
+      </main>
+    </div>
+  </body>
+</html>

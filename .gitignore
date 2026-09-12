@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.firebase/
+.firebaserc
+.env*
+!.env.example
+config/runtime.local.js
+private/
+**/Prefect Ballot/
+**/*.pem
+**/*.key
+**/*service-account*.json
+.DS_Store
+*.log

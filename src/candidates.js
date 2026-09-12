@@ -1,0 +1,41 @@
+// Fictional demonstration records. No school roster or student photographs.
+const names = [
+  "Alex Morgan",
+  "Jamie Chen",
+  "Jordan Patel",
+  "Taylor Ellis",
+  "Casey Rivera",
+  "Riley Park",
+  "Sam Bennett",
+  "Avery Singh",
+  "Quinn Brooks",
+  "Drew Lee",
+  "Cameron Reed",
+  "Rowan Kim",
+  "Skyler Evans",
+  "Reese Taylor",
+  "Parker Lane",
+  "Charlie Ross",
+  "Finley Blake",
+  "Emerson Wells",
+  "Hayden Cruz",
+  "Morgan Shaw",
+];
+const houses = [
+  ["Orchard", "#b44c00"],
+  ["Wright", "#7943a3"],
+  ["Rigby", "#927400"],
+  ["Hodgetts", "#64748b"],
+  ["Burns", "#be353b"],
+  ["Scott", "#257552"],
+  ["Ketchum", "#244472"],
+  ["Brent", "#626a70"],
+  ["Bickle", "#283344"],
+  ["Bethune", "#286bb5"],
+];
+export const candidates = names.map((name, i) => ({
+  id: `demo-${String(i + 1).padStart(2, "0")}`,
+  name,
+  house: houses[Math.floor(i / 2)][0],
+  color: houses[Math.floor(i / 2)][1],
+}));

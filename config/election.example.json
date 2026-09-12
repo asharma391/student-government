@@ -1,0 +1,37 @@
+{
+  "elections": {
+    "staging-election": {
+      "config": {
+        "open": false,
+        "allowedDomain": "example.edu",
+        "leaderCount": 2,
+        "representativeCount": 6
+      },
+      "eligibleVoters": {
+        "REPLACE_WITH_STAGING_AUTH_UID": true
+      },
+      "candidates": {
+        "demo-01": true,
+        "demo-02": true,
+        "demo-03": true,
+        "demo-04": true,
+        "demo-05": true,
+        "demo-06": true,
+        "demo-07": true,
+        "demo-08": true,
+        "demo-09": true,
+        "demo-10": true,
+        "demo-11": true,
+        "demo-12": true,
+        "demo-13": true,
+        "demo-14": true,
+        "demo-15": true,
+        "demo-16": true,
+        "demo-17": true,
+        "demo-18": true,
+        "demo-19": true,
+        "demo-20": true
+      }
+    }
+  }
+}

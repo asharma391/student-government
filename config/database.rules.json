@@ -1,0 +1,35 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "elections": {
+      "$election": {
+        "submissions": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid && auth.token.email_verified === true && auth.token.email.matches(/^[^@]+@[^@]+$/) && auth.token.email.replace(/^[^@]+@/, '') === root.child('elections').child($election).child('config').child('allowedDomain').val() && root.child('elections').child($election).child('eligibleVoters').child($uid).val() === true",
+            ".write": "auth != null && auth.uid === $uid && auth.token.email_verified === true && auth.token.email.matches(/^[^@]+@[^@]+$/) && auth.token.email.replace(/^[^@]+@/, '') === root.child('elections').child($election).child('config').child('allowedDomain').val() && root.child('elections').child($election).child('eligibleVoters').child($uid).val() === true && root.child('elections').child($election).child('config').child('open').val() === true && !data.exists() && newData.exists()",
+            ".validate": "newData.hasChildren(['leaders','representatives','timestamp']) && newData.numChildren() === 3",
+            "leaders": {
+              ".validate": "newData.numChildren() === root.child('elections').child($election).child('config').child('leaderCount').val()",
+              "$candidate": {
+                ".validate": "newData.val() === true && root.child('elections').child($election).child('candidates').child($candidate).val() === true && !newData.parent().parent().child('representatives').child($candidate).exists()"
+              }
+            },
+            "representatives": {
+              ".validate": "newData.numChildren() === root.child('elections').child($election).child('config').child('representativeCount').val()",
+              "$candidate": {
+                ".validate": "newData.val() === true && root.child('elections').child($election).child('candidates').child($candidate).val() === true"
+              }
+            },
+            "timestamp": {
+              ".validate": "newData.isNumber() && newData.val() === now"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

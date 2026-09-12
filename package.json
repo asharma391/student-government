@@ -1,0 +1,21 @@
+{
+  "name": "student-government-elections",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Student government election application originally built for Trinity College School",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test",
+    "check": "node scripts/check.mjs",
+    "format": "prettier --write public src scripts tests config *.json",
+    "format:check": "prettier --check public src scripts tests config *.json"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}
